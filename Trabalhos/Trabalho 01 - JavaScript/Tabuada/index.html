@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Modelo De Exercício</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <h1>TABUADA</h1>
+        </header>
+
+        <section>
+            
+            <div>
+                <p>Insira um número: <input type="number" name="num" id="input"></p>
+            </div>
+    
+            <div class="container">
+
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            <input type="button" value="Tabuada de Multiplicação" onclick="mult()">
+                        </div>
+                        <div>
+                            <select name="tabuada" id="seltab" size="10">
+                                <option>Digite um Número acima</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+
+                    <div class="row">
+                        <div class="col">
+                            <input type="button" value="Tabuada de Divisão" onclick="div()">
+                            <div>
+                                <select name="tabuada" id="seltab2" size="10">
+                                    <option>Digite um Número acima</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy;Luiz Henrique Silvério de Souza</p>
+        </footer>
+        <script src="script.js"></script>
+    </body>
+
+</html>
