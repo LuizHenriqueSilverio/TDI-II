@@ -1,6 +1,7 @@
 const form = document.getElementById('form');
 const descInput = document.getElementById('descricao');
 const valueInput = document.querySelector('#montante');
+const balance = document.getElementById('balanco');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -20,6 +21,18 @@ form.addEventListener('submit', (event) => {
         return;
     }
 
+    const transaction = {
+        id: parseInt(Math.random() * 10000),
+        desc: descTransaction,
+        value: valueTransaction
+    }
+
     descInput.value = '';
     valueInput.value = '';
 });
+
+function sumToBalance(transaction) {
+    let balanceValue = balance.innerHTML.trim();
+    balanceValue = balanceValue.replace('R$', '');
+    balanceValue = parseFloat(balanceValue); 
+}
