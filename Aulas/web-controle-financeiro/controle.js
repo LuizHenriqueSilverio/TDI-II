@@ -4,6 +4,7 @@ const valueInput = document.querySelector('#montante');
 const balance = document.getElementById('balanco');
 const revenue = document.querySelector('#din-positivo');
 const expenses = document.querySelector('#din-negativo');
+const transactionsList = document.getElementById('transacoes');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -33,6 +34,8 @@ form.addEventListener('submit', (event) => {
 
     sumRevenueExpenses(transaction);
 
+    addTransactionToList(transaction);
+
     descInput.value = '';
     valueInput.value = '';
 });
@@ -55,4 +58,15 @@ function sumRevenueExpenses(transaction) {
     value += Math.abs(transaction.value);
 
     element.innerHTML = `${sub}${value.toFixed(2)}`;
+}
+
+function addTransactionToList(transaction) {
+    const cssClass = transaction.value > 0 ? 'positivo' : 'negativo';
+    const currency = transaction.value > 0 ? 'R$' : '-R$';
+
+    let element = `<li class="${cssClass}">
+    ${transaction.desc} <span>${currency}${Math.abs(transaction.value)}</span><button class="delete-btn">X</button>
+  </li>`
+
+    transactionsList.innerHTML += element;
 }
