@@ -49,6 +49,4 @@ public class Seller {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-	
-	
 }

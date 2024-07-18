@@ -22,8 +22,8 @@ public class SellersController extends HttpServlet {
 		String action = req.getRequestURI();
 		
 		switch (action) {
-		case "": {
-			
+		case "/crud-manager/seller/form": {
+			ControllerUtil.forward(req, resp, "/form-seller.jsp");
 			break;
 		}
 		default:
