@@ -4,6 +4,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Company;
 import model.ModelException;
 import model.Seller;
 
@@ -88,8 +89,32 @@ public class MySQLSellerDAO implements SellerDAO{
 
 	@Override
 	public Seller findById(int id) throws ModelException {
-		// TODO Auto-generated method stub
-		return null;
+		DBHandler db = new DBHandler();
+		
+		String sqlQuery = "SELECT * FROM sellers WHERE id = ?;";
+		
+		db.prepareStatement(sqlQuery);
+		db.setInt(1, id);
+		db.executeQuery();
+		
+		Seller s = null;
+		while(db.next()) {
+			s = createSeller(db);
+			break;
+		}
+		
+		return s;
+	}
+	
+	public Seller createSeller(DBHandler db) throws ModelException {
+		Seller s = new Seller(db.getInt("id"));
+		s.setName(db.getString("name"));
+		s.setEmail(db.getString("email"));
+		s.setFone(db.getString("fone"));
+		Company c = new Company(db.getInt("company_id"));
+		s.setCompany(c);
+		
+		return s;
 	}
 
 }
