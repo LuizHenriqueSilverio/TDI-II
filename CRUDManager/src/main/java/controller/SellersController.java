@@ -16,7 +16,7 @@ import model.dao.CompanyDAO;
 import model.dao.DAOFactory;
 import model.dao.SellerDAO;
 
-@WebServlet(urlPatterns = {"/sellers", "/seller/form"})
+@WebServlet(urlPatterns = {"/sellers", "/seller/form", "/seller/insert"})
 public class SellersController extends HttpServlet {
 	
 	@Override
@@ -45,6 +45,7 @@ public class SellersController extends HttpServlet {
 		switch (action) {
 		case "/crud-manager/seller/insert": {
 			insertSeller(req);
+			ControllerUtil.redirect(resp, req.getContextPath() + "/sellers");
 			break;
 		}
 		default:
@@ -68,7 +69,11 @@ public class SellersController extends HttpServlet {
 		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
 		
 		try {
-			dao.save(seller);
+			if(dao.save(seller)) {
+				ControllerUtil.sucessMessage(req, "Vendedor '" + seller.getName() + "' salvo com sucesso.");
+			} else {
+				ControllerUtil.errorMessage(req, "Vendedor '" + seller.getName() + "' não pode ser salvo.");
+			}
 		} catch (ModelException e) {
 			ControllerUtil.errorMessage(req, "Erro ao salvar dados do vendedor");
 		}

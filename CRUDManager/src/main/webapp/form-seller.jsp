@@ -69,5 +69,16 @@
 			</form>
 			
 		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+		 $(document).ready(function()) {
+			 setTimeout(function() {
+			 	$("#alert").slideUp(500);
+			 }, 5000);
+			 
+			 
+		 });
+		</script>
 	</body>
 </html>
