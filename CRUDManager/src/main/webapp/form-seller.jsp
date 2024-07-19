@@ -13,7 +13,7 @@
 		<div id="container" class="container-fluid">
 			<h3 class="page-header">Adicionar Vendedor</h3>
 			
-			<form action="${pageContext.request.contextPath}/seller/${action}" method="POST">
+			<form action="${pageContext.request.contextPath}/seller/insert" method="POST">
 				<input type="hidden" value="${seller.getId()}" name="postId">
 				
 				<div class="row">
@@ -46,20 +46,26 @@
 					</div>
 					
 					<div class="form-group col-md-6">
-							<label for="user">Empresa</label>
-							<select id="user" class="form-control selectpicker" name="user" 
+							<label for="seller_company">Empresa</label>
+							<select id="seller_company" class="form-control selectpicker" name="seller_company" 
 								    required oninvalid="this.setCustomValidity('Por favor, informe a empresa.')"
 								    oninput="setCustomValidity('')">
 							  <option value="" disabled ${not empty seller ? "" : "selected"}>Selecione uma empresa</option>
-							  <c:forEach var="user" items="${users}">
-							  	<option value="${user.getId()}"  ${post.getUser().getId() == user.getId() ? "selected" : ""}>
-							  		${user.getName()}
+							  <c:forEach var="company" items="${companies}">
+							  	<option value="${company.getId()}">
+							  		${company.getName()}
 							  	</option>	
 							  </c:forEach>
 							</select>
 					</div>
 				</div>
-				
+				<hr />
+				<div id="actions" class="row pull-right">
+					<div class="col-md-12">
+						<a href="${pageContext.request.contextPath}/sellers" class="btn btn-default">Cancelar</a>
+						<button type="submit" class="btn btn-primary">${not empty post ? "Alterar Vendedor" : "Criar Vendedor"}</button>
+					</div>
+				</div>
 			</form>
 			
 		</div>
