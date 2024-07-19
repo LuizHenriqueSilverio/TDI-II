@@ -46,11 +46,11 @@
 					</div>
 					
 					<div class="form-group col-md-6">
-							<label for="user">Usuário</label>
+							<label for="user">Empresa</label>
 							<select id="user" class="form-control selectpicker" name="user" 
-								    required oninvalid="this.setCustomValidity('Por favor, informe o usuário.')"
+								    required oninvalid="this.setCustomValidity('Por favor, informe a empresa.')"
 								    oninput="setCustomValidity('')">
-							  <option value="" disabled ${not empty post ? "" : "selected"}>Selecione um usuário</option>
+							  <option value="" disabled ${not empty seller ? "" : "selected"}>Selecione uma empresa</option>
 							  <c:forEach var="user" items="${users}">
 							  	<option value="${user.getId()}"  ${post.getUser().getId() == user.getId() ? "selected" : ""}>
 							  		${user.getName()}
