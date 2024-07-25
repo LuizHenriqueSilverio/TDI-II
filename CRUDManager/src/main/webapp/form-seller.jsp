@@ -5,16 +5,16 @@
 	<head>
 		<%@include file="base-head.jsp"%>
 		<meta charset="UTF-8">
-		<title>CRUD MANAGER - INSERIR VENDEDOR</title>
+		<title>CRUD MANAGER - ${action eq "insert" ? "ADICIONAR " : "EDITAR "} VENDEDOR</title>
 	</head>
 	<body>
 		<%@include file="nav-menu.jsp"%>
 		
 		<div id="container" class="container-fluid">
-			<h3 class="page-header">Adicionar Vendedor</h3>
+			<h3 class="page-header">${action eq "insert" ? "Adicionar " : "Editar "} Vendedor</h3>
 			
-			<form action="${pageContext.request.contextPath}/seller/insert" method="POST">
-				<input type="hidden" value="${seller.getId()}" name="postId">
+			<form action="${pageContext.request.contextPath}/seller/${action}" method="POST">
+				<input type="hidden" value="${sellerEdit.getId()}" name="sellerId">
 				
 				<div class="row">
 					<div class="form-group col-md-6">
@@ -22,7 +22,9 @@
 							<input type="text" class="form-control" id="seller_name" name="seller_name" 
 							  autofocus="autofocus" placeholder="Nome do Vendedor" 
 							  required oninvalid="this.setCustomValidity('Por favor, informe o nome do vendedor.')"
-							  oninput="setCustomValidity('')">
+							  oninput="setCustomValidity('')"
+							  value="${sellerEdit.getName()}"
+							  >
 					</div>
 					
 					
@@ -32,7 +34,9 @@
 							<input type="email" class="form-control" id="seller_email" name="seller_email" 
 							   autofocus="autofocus" placeholder="Email do Vendedor" 
 							   required oninvalid="this.setCustomValidity('Por favor, informe o email do vendedor.')"
-							   oninput="setCustomValidity('')">
+							   oninput="setCustomValidity('')"
+							   value="${sellerEdit.getEmail()}"
+							   >
 					</div>
 					
 					
@@ -42,7 +46,9 @@
 							<input type="number" class="form-control" id="seller_fone" name="seller_fone" 
 								  autofocus="autofocus" placeholder="Telefone do Vendedor" 
 								  required oninvalid="this.setCustomValidity('Por favor, informe o telefone do vendedor.')"
-								  oninput="setCustomValidity('')">
+								  oninput="setCustomValidity('')"
+								  value="${sellerEdit.getFone()}"
+								  >
 					</div>
 					
 					<div class="form-group col-md-6">
@@ -50,9 +56,11 @@
 							<select id="seller_company" class="form-control selectpicker" name="seller_company" 
 								    required oninvalid="this.setCustomValidity('Por favor, informe a empresa.')"
 								    oninput="setCustomValidity('')">
-							  <option value="" disabled ${not empty seller ? "" : "selected"}>Selecione uma empresa</option>
+							  <option value="" disabled ${not empty sellerEdit ? "" : "selected"}>Selecione uma empresa</option>
 							  <c:forEach var="company" items="${companies}">
-							  	<option value="${company.getId()}">
+							  	<option value="${company.getId()}" 
+							  		${sellerEdit.getCompany().getId() eq company.getId() 
+							  		? "selected" : ""}>
 							  		${company.getName()}
 							  	</option>	
 							  </c:forEach>
@@ -63,7 +71,7 @@
 				<div id="actions" class="row pull-right">
 					<div class="col-md-12">
 						<a href="${pageContext.request.contextPath}/sellers" class="btn btn-default">Cancelar</a>
-						<button type="submit" class="btn btn-primary">${not empty post ? "Alterar Vendedor" : "Criar Vendedor"}</button>
+						<button type="submit" class="btn btn-primary">${action eq "insert" ? "Criar " : "Editar "} Vendedor</button>
 					</div>
 				</div>
 			</form>
