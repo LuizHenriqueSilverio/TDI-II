@@ -29,12 +29,12 @@ public class MySQLSellerDAO implements SellerDAO{
 	public boolean update(Seller seller) throws ModelException {
 		DBHandler db = new DBHandler();
 		
-		String sqlUpdate = "UPDATE sellers"
+		String sqlUpdate = "UPDATE sellers "
 						   + "SET name = ?, "
-						   + "SET email = ?, "
-						   + "SET fone = ?, "
-						   + "SET company = ?, "
-						 + "WHERE id = ?;"; 
+						   + "email = ?, "
+						   + "fone = ?, "
+						   + "company_id = ? "
+						 + "WHERE id = ?"; 
 		
 		db.prepareStatement(sqlUpdate);
 		
@@ -51,20 +51,13 @@ public class MySQLSellerDAO implements SellerDAO{
 	public boolean delete(Seller seller) throws ModelException {
 		DBHandler db = new DBHandler();
 		
-		String sqlDelete = "DELETE FROM sellers"
+		String sqlDelete = "DELETE FROM sellers "
 						 + "WHERE id = ?;";
 		
 		db.prepareStatement(sqlDelete);
 		db.setInt(1, seller.getId());
 		
-		try {
-			return db.executeUpdate() > 0;
-		} catch (ModelException e) {
-			if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
-				return false;
-			}	
-			throw e; 
-		}
+		return db.executeUpdate() > 0;
 	}
 
 	@Override
@@ -111,7 +104,8 @@ public class MySQLSellerDAO implements SellerDAO{
 		s.setName(db.getString("name"));
 		s.setEmail(db.getString("email"));
 		s.setFone(db.getString("fone"));
-		Company c = new Company(db.getInt("company_id"));
+		CompanyDAO companyDAO = DAOFactory.createDAO(CompanyDAO.class);
+		Company c = companyDAO.findById(db.getInt("company_id"));
 		s.setCompany(c);
 		
 		return s;
