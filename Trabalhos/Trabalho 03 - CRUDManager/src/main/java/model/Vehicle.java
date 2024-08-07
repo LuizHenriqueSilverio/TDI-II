@@ -5,6 +5,7 @@ public class Vehicle {
 	private int id;
 	private String type;
 	private String brand;
+	private String model;
 	private int yearOfManufacture;
 	private String color;
 	private Company company;
@@ -39,6 +40,15 @@ public class Vehicle {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
+	
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
 	public int getYearOfManufacture() {
 		return yearOfManufacture;
 	}

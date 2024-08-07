@@ -13,14 +13,15 @@ public class MySQLVehicleDAO implements VehicleDAO{
 	public boolean save(Vehicle vehicle) throws ModelException {
 		DBHandler db = new DBHandler();
 		
-		String sqlInsert = "INSERT INTO vehicles VALUES " + " (DEFAULT, ?, ?, ?, ?, ?);";
+		String sqlInsert = "INSERT INTO vehicles VALUES " + " (DEFAULT, ?, ?, ?, ?, ?, ?);";
 		
 		db.prepareStatement(sqlInsert);
 		db.setString(1, vehicle.getType());
 		db.setString(2, vehicle.getBrand());
-		db.setInt(3, vehicle.getYearOfManufacture());
-		db.setString(4, vehicle.getColor());
-		db.setInt(5, vehicle.getCompany().getId());
+		db.setString(3, vehicle.getModel());
+		db.setInt(4, vehicle.getYearOfManufacture());
+		db.setString(5, vehicle.getColor());
+		db.setInt(6, vehicle.getCompany().getId());
 		
 		return db.executeUpdate() > 0;
 	}
@@ -32,6 +33,7 @@ public class MySQLVehicleDAO implements VehicleDAO{
 		String sqlUpdate = "UPDATE vehicles "
 						   + " SET type = ?, "
 						   + " brand = ?, "
+						   + " model = ?, "
 						   + " yearOfManufacture = ?, "
 						   + " color = ?, "
 						   + " company_id = ? "
@@ -41,10 +43,11 @@ public class MySQLVehicleDAO implements VehicleDAO{
 		
 		db.setString(1, vehicle.getType());
 		db.setString(2, vehicle.getBrand());
-		db.setInt(3, vehicle.getYearOfManufacture());
-		db.setString(4, vehicle.getColor());
-		db.setInt(5, vehicle.getCompany().getId());
-		db.setInt(6, vehicle.getId());
+		db.setString(3, vehicle.getModel());
+		db.setInt(4, vehicle.getYearOfManufacture());
+		db.setString(5, vehicle.getColor());
+		db.setInt(6, vehicle.getCompany().getId());
+		db.setInt(7, vehicle.getId());
 		
 		return db.executeUpdate() > 0;
 	}
@@ -105,6 +108,7 @@ public class MySQLVehicleDAO implements VehicleDAO{
 		Vehicle v = new Vehicle(db.getInt("id"));
 		v.setType(db.getString("type"));
 		v.setBrand(db.getString("brand"));
+		v.setModel(db.getString("model"));
 		v.setYearOfManufacture(db.getInt("yearOfManufacture"));
 		v.setColor(db.getString("color"));
 		CompanyDAO companyDAO = DAOFactory.createDAO(CompanyDAO.class);
