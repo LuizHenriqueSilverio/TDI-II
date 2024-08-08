@@ -16,7 +16,7 @@ import model.dao.CompanyDAO;
 import model.dao.DAOFactory;
 import model.dao.VehicleDAO;
 
-@WebServlet(urlPatterns = {"/vehicles", "/vehicle/form"})
+@WebServlet(urlPatterns = {"/vehicles", "/vehicle/form", "/vehicle/insert"})
 public class VehiclesController extends HttpServlet {
 
 	@Override
@@ -46,20 +46,33 @@ public class VehiclesController extends HttpServlet {
 		String action = req.getRequestURI();
 		
 		switch (action) {
-		case "/crud-manager/seller/insert": {
+		case "/crud-manager/vehicle/insert": {
 			insertVehicle(req);
 			ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
 			break;
 		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + action);
 		}
 	}
 
 	private void insertVehicle(HttpServletRequest req) {
 		Vehicle vehicle = createVehicle(req, 0);
 		
+		VehicleDAO dao = DAOFactory.createDAO(VehicleDAO.class);
+		
+		try {
+			if ( dao.save(vehicle) ) {
+				ControllerUtil.sucessMessage(req, "Veículo '" + vehicle.getModel() + "' salvo com sucesso.");
+			} else {
+				ControllerUtil.errorMessage(req, "Veículo '" + vehicle.getModel() + "' não pode ser salvo.");
+			}
+		} catch (ModelException e) {
+			ControllerUtil.errorMessage(req, "Erro ao salvar dados do vendedor");
+		}
 	}
 
-	private Vehicle createVehicle(HttpServletRequest req, int i) {
+	private Vehicle createVehicle(HttpServletRequest req, int vehicleId) {
 		String vehicleType = req.getParameter("vehicle_type");
 		String vehicleBrand = req.getParameter("vehicle_brand");
 		String vehicleModel = req.getParameter("vehicle_model");
@@ -68,6 +81,22 @@ public class VehiclesController extends HttpServlet {
 		String plate = req.getParameter("vehicle_plate");
 		String vehicleCompany = req.getParameter("vehicle_company");
 		int vehicleCompanyId = Integer.parseInt(vehicleCompany);
+		Vehicle vehicle;
+		
+		if(vehicleId == 0) {
+			vehicle = new Vehicle();
+		}else {
+			vehicle = new Vehicle(vehicleId);
+		}
+		
+		vehicle.setType(vehicleType);
+		vehicle.setBrand(vehicleBrand);
+		vehicle.setModel(vehicleModel);
+		vehicle.setYearOfManufacture(yearOfManufacture);
+		vehicle.setPlate(plate);
+		vehicle.setCompany(new Company(vehicleCompanyId));
+		
+		return vehicle;
 	}
 
 	private void loadCompanies(HttpServletRequest req) {
