@@ -7,7 +7,7 @@ public class Vehicle {
 	private String brand;
 	private String model;
 	private int yearOfManufacture;
-	private String color;
+	private String plate;
 	private Company company;
 	
 	public Vehicle() {
@@ -19,7 +19,7 @@ public class Vehicle {
 		setType("");
 		setBrand("");
 		setYearOfManufacture(0);
-		setColor("");
+		setPlate("");
 	}
 	
 	public int getId() {
@@ -55,11 +55,11 @@ public class Vehicle {
 	public void setYearOfManufacture(int yearOfManufacture) {
 		this.yearOfManufacture = yearOfManufacture;
 	}
-	public String getColor() {
-		return color;
+	public String getPlate() {
+		return plate;
 	}
-	public void setColor(String color) {
-		this.color = color;
+	public void setPlate(String plate) {
+		this.plate = plate;
 	}
 	public Company getCompany() {
 		return company;

@@ -27,6 +27,7 @@ public class VehiclesController extends HttpServlet {
 		case "/crud-manager/vehicle/form": {
 			loadCompanies(req);
 			req.setAttribute("action", "insert");
+			req.setAttribute("method", "POST");
 			ControllerUtil.forward(req, resp, "/form-vehicle.jsp");
 			break;
 		}
@@ -38,6 +39,35 @@ public class VehiclesController extends HttpServlet {
 				
 			break;
 		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String action = req.getRequestURI();
+		
+		switch (action) {
+		case "/crud-manager/seller/insert": {
+			insertVehicle(req);
+			ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
+			break;
+		}
+		}
+	}
+
+	private void insertVehicle(HttpServletRequest req) {
+		Vehicle vehicle = createVehicle(req, 0);
+		
+	}
+
+	private Vehicle createVehicle(HttpServletRequest req, int i) {
+		String vehicleType = req.getParameter("vehicle_type");
+		String vehicleBrand = req.getParameter("vehicle_brand");
+		String vehicleModel = req.getParameter("vehicle_model");
+		String vehicleYearOfManufactureStr = req.getParameter("vehicle_yearOfManufacture");
+		int yearOfManufacture = Integer.parseInt(vehicleYearOfManufactureStr);
+		String plate = req.getParameter("vehicle_plate");
+		String vehicleCompany = req.getParameter("vehicle_company");
+		int vehicleCompanyId = Integer.parseInt(vehicleCompany);
 	}
 
 	private void loadCompanies(HttpServletRequest req) {

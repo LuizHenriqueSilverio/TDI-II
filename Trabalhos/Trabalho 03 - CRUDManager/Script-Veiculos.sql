@@ -4,7 +4,7 @@ CREATE TABLE Vehicles (
     brand VARCHAR(255) NOT NULL,
     model VARCHAR(255) NOT NULL,
     yearOfManufacture INT NOT NULL,
-    color VARCHAR(255) NOT NULL,
+    plate VARCHAR(255) NOT NULL,
     company_id INT,
     FOREIGN KEY (company_id) REFERENCES companies(id)
 );

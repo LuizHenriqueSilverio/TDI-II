@@ -51,7 +51,7 @@
 			                    <th>Marca</th>
 			                    <th>Modelo</th>
 			                    <th>Ano de Fabricação</th>
-			                    <th>Cor</th>
+			                    <th>Placa</th>
 			                    <th>Empresa</th>
 			                    <th>Editar</th>
 			                    <th>Excluir</th>
@@ -64,7 +64,7 @@
 				                    <td>${vehicle.getBrand()}</td>
 				                    <td>${vehicle.getModel()}</td>
 				                    <td>${vehicle.getYearOfManufacture()}</td>
-				                    <td>${vehicle.getColor()}</td>
+				                    <td>${vehicle.getPlate()}</td>
 				                    <td>${vehicle.getCompany().getName()}</td>				                    
 				                    
 				                    <td class="actions">

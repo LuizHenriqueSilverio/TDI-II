@@ -20,7 +20,7 @@ public class MySQLVehicleDAO implements VehicleDAO{
 		db.setString(2, vehicle.getBrand());
 		db.setString(3, vehicle.getModel());
 		db.setInt(4, vehicle.getYearOfManufacture());
-		db.setString(5, vehicle.getColor());
+		db.setString(5, vehicle.getPlate());
 		db.setInt(6, vehicle.getCompany().getId());
 		
 		return db.executeUpdate() > 0;
@@ -35,7 +35,7 @@ public class MySQLVehicleDAO implements VehicleDAO{
 						   + " brand = ?, "
 						   + " model = ?, "
 						   + " yearOfManufacture = ?, "
-						   + " color = ?, "
+						   + " plate = ?, "
 						   + " company_id = ? "
 						 + " WHERE id = ?;";
 		
@@ -45,7 +45,7 @@ public class MySQLVehicleDAO implements VehicleDAO{
 		db.setString(2, vehicle.getBrand());
 		db.setString(3, vehicle.getModel());
 		db.setInt(4, vehicle.getYearOfManufacture());
-		db.setString(5, vehicle.getColor());
+		db.setString(5, vehicle.getPlate());
 		db.setInt(6, vehicle.getCompany().getId());
 		db.setInt(7, vehicle.getId());
 		
@@ -110,7 +110,7 @@ public class MySQLVehicleDAO implements VehicleDAO{
 		v.setBrand(db.getString("brand"));
 		v.setModel(db.getString("model"));
 		v.setYearOfManufacture(db.getInt("yearOfManufacture"));
-		v.setColor(db.getString("color"));
+		v.setPlate(db.getString("plate"));
 		CompanyDAO companyDAO = DAOFactory.createDAO(CompanyDAO.class);
 		Company c = companyDAO.findById(db.getInt("company_id"));
 		v.setCompany(c);
