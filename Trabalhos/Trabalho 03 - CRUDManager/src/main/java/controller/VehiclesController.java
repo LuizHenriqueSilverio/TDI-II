@@ -31,6 +31,14 @@ public class VehiclesController extends HttpServlet {
 			ControllerUtil.forward(req, resp, "/form-vehicle.jsp");
 			break;
 		}
+		case "/crud-manager/vehicle/update": {
+			loadVehicle(req);
+			loadCompanies(req);
+			req.setAttribute("action", "update");
+			req.setAttribute("method", "PUT");
+			ControllerUtil.forward(req, resp, "/form-vehicle.jsp");
+			break;
+		}
 		default: 
 			listVehicles(req);
 				
@@ -40,7 +48,7 @@ public class VehiclesController extends HttpServlet {
 			break;
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getRequestURI();
@@ -70,6 +78,13 @@ public class VehiclesController extends HttpServlet {
 		} catch (ModelException e) {
 			ControllerUtil.errorMessage(req, "Erro ao salvar dados do vendedor");
 		}
+	}
+	
+	private void loadVehicle(HttpServletRequest req) {
+		String vehicleIdStr = req.getParameter("vehicleId");
+		int vehicleId = Integer.parseInt(vehicleIdStr);
+		
+		VehicleDAO vehicleDAO = DAOFactory.createDAO(VehicleDAO.class);
 	}
 
 	private Vehicle createVehicle(HttpServletRequest req, int vehicleId) {
