@@ -99,12 +99,12 @@
 				    // ao clicar no delete de algum post, pega o nome do usuário, 
 				    // o id do usuário e a ação (delete) e envia para o modal 
 				    $(".modal-remove").click(function () {
-			            var sellerName = $(this).attr('data-seller-name');
-			            var sellerId = $(this).attr('data-seller-id');
-			            $(".modal-body #hiddenValue").text("o vendedor '"+sellerName+"'");
-			            $("#id").attr( "value", sellerId);
-			            $("#entityName").attr("value", sellerName);
-			            $("#form").attr( "action","seller/delete");
+			            var vehicleModel = $(this).attr('data-vehicle-model');
+			            var vehicleId = $(this).attr('data-vehicle-id');
+			            $(".modal-body #hiddenValue").text("o veículo '"+ vehicleModel +"'");
+			            $("#id").attr( "value", vehicleId);
+			            $("#entityName").attr("value", vehicleModel);
+			            $("#form").attr( "action","vehicle/delete");
 			        })
 				});
 			</script>

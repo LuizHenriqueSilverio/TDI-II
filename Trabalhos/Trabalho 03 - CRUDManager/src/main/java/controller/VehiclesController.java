@@ -16,7 +16,7 @@ import model.dao.CompanyDAO;
 import model.dao.DAOFactory;
 import model.dao.VehicleDAO;
 
-@WebServlet(urlPatterns = {"/vehicles", "/vehicle/form", "/vehicle/insert"})
+@WebServlet(urlPatterns = {"/vehicles", "/vehicle/form", "/vehicle/insert", "/vehicle/update", "/vehicle/delete"})
 public class VehiclesController extends HttpServlet {
 
 	@Override
@@ -51,17 +51,91 @@ public class VehiclesController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String method = req.getParameter("_method");
+		
+        if (method.equals("PUT")) {
+            doPut(req, resp);
+        } else if (method.equals("DELETE")) {
+            doDelete(req, resp);
+        } else {
+        	String action = req.getRequestURI();
+            
+        	switch (action) {
+    		case "/crud-manager/vehicle/insert": {
+    			insertVehicle(req);
+    			ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
+    			break;
+    		}
+    	
+    		default:
+    			throw new IllegalArgumentException("Unexpected value: " + action);
+    		}
+        }
+		
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getRequestURI();
 		
-		switch (action) {
-		case "/crud-manager/vehicle/insert": {
-			insertVehicle(req);
+		switch (action) { 
+		case "/crud-manager/vehicle/update": {
+			updateVehicle(req);
 			ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
 			break;
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + action);
 		}
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String action = req.getRequestURI();
+		
+		switch (action) {
+		case "/crud-manager/vehicle/delete": { 
+			String vehicleIdStr = req.getParameter("id");
+			String vehicleModel = req.getParameter("entityName");
+			int vehicleId = Integer.parseInt(vehicleIdStr);
+			
+			VehicleDAO dao = DAOFactory.createDAO(VehicleDAO.class);
+			
+			try {
+				if(dao.delete(new Vehicle(vehicleId))) {
+					ControllerUtil.sucessMessage(req, "Veículo " + vehicleModel + " excluido com sucesso");
+				} else {
+					ControllerUtil.errorMessage(req, "Veículo " + vehicleModel + " não pode ser excluido");
+				}
+			} catch (ModelException e) {
+				ControllerUtil.errorMessage(req, "Erro ao excluir veículo");
+			} finally {
+				ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
+			}
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + action);
+		}
+	}
+	
+	private void updateVehicle(HttpServletRequest req) {
+		String vehicleIdStr = req.getParameter("vehicleId");
+		int vehicleId = Integer.parseInt(vehicleIdStr);
+		Vehicle vehicle = createVehicle(req, vehicleId);
+		
+		VehicleDAO dao = DAOFactory.createDAO(VehicleDAO.class);
+		
+		try {
+			if(dao.update(vehicle) ) {
+				ControllerUtil.sucessMessage(req, "Veículo '" + vehicle.getModel() + "' alterado com sucesso.");
+			} else {
+				ControllerUtil.errorMessage(req, "Veículo '" + vehicle.getModel() + "' não pode ser alterado.");
+			}
+		} catch (ModelException e) {
+			ControllerUtil.errorMessage(req, "Erro ao alterar dados do veículo");
+		}
+		
 	}
 
 	private void insertVehicle(HttpServletRequest req) {
@@ -85,6 +159,15 @@ public class VehiclesController extends HttpServlet {
 		int vehicleId = Integer.parseInt(vehicleIdStr);
 		
 		VehicleDAO vehicleDAO = DAOFactory.createDAO(VehicleDAO.class);
+		Vehicle vehicle = new Vehicle();
+		
+		try {
+			vehicle = vehicleDAO.findById(vehicleId);
+		} catch (ModelException e) {
+			ControllerUtil.errorMessage(req, "Erro ao carregar dados do veículo");
+		}
+		
+		req.setAttribute("vehicleEdit", vehicle);
 	}
 
 	private Vehicle createVehicle(HttpServletRequest req, int vehicleId) {
@@ -139,4 +222,6 @@ public class VehiclesController extends HttpServlet {
 		
 		req.setAttribute("vehicles", vehicles);
 	}
+	
+
 }

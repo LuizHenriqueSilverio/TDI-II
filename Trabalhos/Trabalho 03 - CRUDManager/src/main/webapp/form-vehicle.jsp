@@ -13,7 +13,8 @@
 		<div id="container" class="container-fluid">
 			<h3 class="page-header">${action eq "insert" ? "Adicionar " : "Editar "} Veículo</h3>
 			
-			<form action="${pageContext.request.contextPath}/vehicle/${action}" method="${method}">
+			<form action="${pageContext.request.contextPath}/vehicle/${action}/" method="POST">
+				<input type="hidden" value="${method} name="_method">
 				<input type="hidden" value="${vehicleEdit.getId()}" name="vehicleId">
 				
 				<div class="row">
