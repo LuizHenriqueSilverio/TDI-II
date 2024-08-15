@@ -77,7 +77,7 @@
 				                    <td class="actions">
 				                        <a class="btn btn-danger btn-xs modal-remove"
 				                           data-vehicle-id="${vehicle.getId()}" 
-				                           data-vehicle-name="${vehicle.getModel()}" data-toggle="modal" 
+				                           data-vehicle-plate="${vehicle.getPlate()}" data-toggle="modal" 
 				                           data-target="#delete-modal"  href="#"><span 
 				                           class="glyphicon glyphicon-trash"></span></a>
 				                    </td>
@@ -99,11 +99,11 @@
 				    // ao clicar no delete de algum post, pega o nome do usuário, 
 				    // o id do usuário e a ação (delete) e envia para o modal 
 				    $(".modal-remove").click(function () {
-			            var vehicleModel = $(this).attr('data-vehicle-model');
+			            var vehiclePlate = $(this).attr('data-vehicle-plate');
 			            var vehicleId = $(this).attr('data-vehicle-id');
-			            $(".modal-body #hiddenValue").text("o veículo '"+ vehicleModel +"'");
+			            $(".modal-body #hiddenValue").text("o veículo de placa '"+ vehiclePlate +"'");
 			            $("#id").attr( "value", vehicleId);
-			            $("#entityName").attr("value", vehicleModel);
+			            $("#entityName").attr("value", vehiclePlate);
 			            $("#form").attr( "action","vehicle/delete");
 			        })
 				});

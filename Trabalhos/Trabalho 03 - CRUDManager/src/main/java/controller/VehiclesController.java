@@ -27,7 +27,6 @@ public class VehiclesController extends HttpServlet {
 		case "/crud-manager/vehicle/form": {
 			loadCompanies(req);
 			req.setAttribute("action", "insert");
-			req.setAttribute("method", "POST");
 			ControllerUtil.forward(req, resp, "/form-vehicle.jsp");
 			break;
 		}
@@ -35,7 +34,6 @@ public class VehiclesController extends HttpServlet {
 			loadVehicle(req);
 			loadCompanies(req);
 			req.setAttribute("action", "update");
-			req.setAttribute("method", "PUT");
 			ControllerUtil.forward(req, resp, "/form-vehicle.jsp");
 			break;
 		}
@@ -44,57 +42,25 @@ public class VehiclesController extends HttpServlet {
 				
 			ControllerUtil.transferSessionMessagesToRequest(req);	
 			ControllerUtil.forward(req, resp, "/vehicles.jsp");
-				
-			break;
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String method = req.getParameter("_method");
-		
-        if (method.equals("PUT")) {
-            doPut(req, resp);
-        } else if (method.equals("DELETE")) {
-            doDelete(req, resp);
-        } else {
-        	String action = req.getRequestURI();
+        String action = req.getRequestURI();
             
-        	switch (action) {
-    		case "/crud-manager/vehicle/insert": {
-    			insertVehicle(req);
-    			ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
-    			break;
-    		}
-    	
-    		default:
-    			throw new IllegalArgumentException("Unexpected value: " + action);
-    		}
-        }
-		
-	}
-	
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String action = req.getRequestURI();
-		
-		switch (action) { 
-		case "/crud-manager/vehicle/update": {
+        switch (action) {
+    	case "/crud-manager/vehicle/insert": {
+    		insertVehicle(req);
+    		ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
+    		break;
+    	}
+    	case "/crud-manager/vehicle/update": {
 			updateVehicle(req);
 			ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
 			break;
 		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + action);
-		}
-	}
-	
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String action = req.getRequestURI();
-		
-		switch (action) {
-		case "/crud-manager/vehicle/delete": { 
+    	case "/crud-manager/vehicle/delete": { 
 			String vehicleIdStr = req.getParameter("id");
 			String vehicleModel = req.getParameter("entityName");
 			int vehicleId = Integer.parseInt(vehicleIdStr);
@@ -113,10 +79,10 @@ public class VehiclesController extends HttpServlet {
 				ControllerUtil.redirect(resp, req.getContextPath() + "/vehicles");
 			}
 			break;
-		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + action);
-		}
+    	}
+    	default:
+    		throw new IllegalArgumentException("Unexpected value: " + action);
+    	}
 	}
 	
 	private void updateVehicle(HttpServletRequest req) {
