@@ -28,7 +28,7 @@
 						<td th:text="${usuario.name}"></td>
 						<td th:text="${usuario.email}"></td>
 						<td th:text="${usuario.gender}"></td>
-						<td></td>
+						<td th:text="${usuario.address.place} + ', nº: ' + ${usuario.address.number}"></td>
 						<td>
 							<a th:href="@{/users/update/{id}(id = ${usuario.id})}" class="btn btn-primary">Alterar</a>
 							<a th:href="@{/users/delete/{id}(id = ${usuario.id})}" class="btn btn-danger">Excluir</a>			

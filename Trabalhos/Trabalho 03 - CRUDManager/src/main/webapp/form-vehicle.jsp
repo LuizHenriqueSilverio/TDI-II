@@ -79,7 +79,7 @@
 							  <option value="" disabled ${not empty vehicleEdit ? "" : "selected"}>Selecione uma empresa</option>
 							  <c:forEach var="company" items="${companies}">
 							  	<option value="${company.getId()}" 
-							  		${sellerEdit.getCompany().getId() eq company.getId() 
+							  		${vehicleEdit.getCompany().getId() eq company.getId() 
 							  		? "selected" : ""}>
 							  		${company.getName()}
 							  	</option>	
