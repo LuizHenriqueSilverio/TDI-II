@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <div th:replace="cabecalho :: head"></div>
+        <title>Crud Manager - Form Concessionária</title>
+    </head>
+
+    <body>
+        <div th:replace="header :: header"></div>
+        <div class="container my-2">
+            <h2>Concessionária</h2>
+            <form action="#" th:action="@{/dealerships/register}" method="POST" th:object="${dealership}">
+
+                <input type="hidden" id="id" th:field="*{id}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}">
+                </span>
+                <input type="text" placeholder="Nome" class="form-control mb-4 col-4" th:field="*{name}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('cnpj')}"
+                    th:errors="*{cnpj}">
+                </span>
+                <input type="number" placeholder="CNPJ" class="form-control mb-4 col-4" th:field="*{cnpj}"> 
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('address')}"
+                    th:errors="*{address}">
+                </span>
+                <input type="text" placeholder="Endereço" class="form-control mb-4 col-4" th:field="*{address}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('phone')}"
+                    th:errors="*{phone}">
+                </span>
+                <input type="number" placeholder="Telefone" class="form-control mb-4 col-4" th:field="*{phone}">
+                
+                <button type="submit" class="btn btn-info col-2">Salvar</button>                
+            </form>
+            <hr>
+        </div>
+    </body>
+</html>

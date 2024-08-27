@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <div th:replace="cabecalho :: head"></div>
+        <title>Crud Manager - Form Veículo</title>
+    </head>
+
+    <body>
+        <div th:replace="header :: header"></div>
+        <div class="container my-2">
+            <h2>Veículo</h2>
+            <form action="#" th:action="@{/vehicles/register}" method="POST" th:object="${vehicle}">
+
+                <input type="hidden" id="id" th:field="*{id}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('brand')}"
+                    th:errors="*{brand}">
+                </span>
+                <input type="text" placeholder="Marca" class="form-control mb-4 col-4" th:field="*{brand}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('model')}"
+                    th:errors="*{model}">
+                </span>
+                <input type="text" placeholder="Modelo" class="form-control mb-4 col-4" th:field="*{model}"> 
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('manufactureYear')}"
+                    th:errors="*{manufactureYear}">
+                </span>
+                <input type="number" placeholder="Ano de Fabricação" class="form-control mb-4 col-4" th:field="*{manufactureYear}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('color')}"
+                    th:errors="*{color}">
+                </span>
+                <input type="text" placeholder="Cor" class="form-control mb-4 col-4" th:field="*{color}">
+
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('plate')}"
+                    th:errors="*{plate}">
+                </span>
+                <input type="text" placeholder="Placa" class="form-control mb-4 col-4" th:field="*{plate}">
+
+                <div class="form-group mb-4">
+                    <label for="dealership">Concessionária</label>
+                    <select id="dealership" name="dealership" class="form-control" th:field="*{dealership}">
+                        <option value="" disabled selected>Selecione uma concessionária</option>
+                        <option th:each="dealership : ${dealerships}" 
+                                th:value="${dealership.id}" 
+                                th:text="${dealership.name}">
+                        </option>
+                    </select>
+                    <span class="text-danger" th:if="${#fields.hasErrors('dealership')}" th:errors="*{dealership}"></span>
+                </div>
+                
+                <button type="submit" class="btn btn-info col-2">Salvar</button>                
+            </form>
+            <hr>
+        </div>
+    </body>
+</html>
