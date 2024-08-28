@@ -41,9 +41,10 @@
                     th:if="${#fields.hasErrors('phone')}"
                     th:errors="*{phone}">
                 </span>
-                <input type="number" placeholder="Telefone" class="form-control mb-4 col-4" th:field="*{phone}">
+                <input type="text" placeholder="Telefone" class="form-control mb-4 col-4" th:field="*{phone}">
                 
-                <button type="submit" class="btn btn-info col-2">Salvar</button>                
+                <button type="submit" class="btn btn-info col-2">Salvar</button> 
+                
             </form>
             <hr>
         </div>
