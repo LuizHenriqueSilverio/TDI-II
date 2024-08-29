@@ -37,7 +37,7 @@ public class Dealership {
     @NotBlank(message = "O telefone não pode ser vazio!")
     private String phone;
 
-    @OneToMany(mappedBy = "dealership")
+    @OneToMany(mappedBy = "dealership", cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
 
     public Integer getId() {
